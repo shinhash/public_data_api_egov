@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="airPlainAPIDao">
+
+	<select id="getAirPlainList" parameterType="HashMap" resultType="egovMap">
+		SELECT TEST_ID, TEST_NM
+		  FROM test_tb
+		 WHERE TEST_ID = #{testId}
+	</select>
+
+	<select id="saveAirPlainList" parameterType="HashMap" resultType="egovMap">
+		SELECT TEST_ID, TEST_NM
+		  FROM test_tb
+		 WHERE TEST_ID = #{testId}
+	</select>
+	
+</mapper>

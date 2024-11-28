@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="airPlainAPIDao">
+
+	<select id="getAirPlainList" parameterType="HashMap" resultType="egovMap">
+		SELECT   SLCTN_YEAR
+			   , CTRD_NM
+			   , CTRD_CODE
+			   , SIGNGU_NM
+			   , SIGNGU_CODE
+			   , VILAGE_NM
+			   , VILAGE_DETAIL_ADRES
+		  FROM rural_experience_resort_village
+	</select>
+	
+	<insert id="saveAirPlainInfo" parameterType="HashMap">
+		INSERT INTO rural_experience_resort_village(
+			SLCTN_YEAR,
+			CTRD_NM,
+			CTRD_CODE,
+			SIGNGU_NM,
+			SIGNGU_CODE,
+			VILAGE_NM,
+			VILAGE_DETAIL_ADRES
+		)VALUES(
+			#{SLCTN_YEAR},
+			#{CTRD_NM},
+			#{CTRD_CODE},
+			#{SIGNGU_NM},
+			#{SIGNGU_CODE},
+			#{VILAGE_NM},
+			#{VILAGE_DETAIL_ADRES}
+		)
+	</insert>
+	
+</mapper>
