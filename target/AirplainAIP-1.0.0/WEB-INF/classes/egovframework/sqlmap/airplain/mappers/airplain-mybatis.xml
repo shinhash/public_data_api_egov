@@ -3,16 +3,45 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="airPlainAPIDao">
 
+	<select id="checkAirPlainInfo" parameterType="HashMap" resultType="int">
+		SELECT COUNT(CTRD_CODE) AS CNT
+		  FROM rural_experience_resort_village
+		 WHERE CTRD_CODE = #{CTRD_CODE}
+		   AND VILAGE_NM = #{VILAGE_NM}
+	</select>
+	
 	<select id="getAirPlainList" parameterType="HashMap" resultType="egovMap">
-		SELECT TEST_ID, TEST_NM
-		  FROM test_tb
-		 WHERE TEST_ID = #{testId}
+		SELECT   SLCTN_YEAR
+			   , CTRD_NM
+			   , CTRD_CODE
+			   , SIGNGU_NM
+			   , SIGNGU_CODE
+			   , VILAGE_NM
+			   , VILAGE_DETAIL_ADRES
+			   , VILAGE_REG_DT
+		  FROM rural_experience_resort_village
 	</select>
-
-	<select id="saveAirPlainList" parameterType="HashMap" resultType="egovMap">
-		SELECT TEST_ID, TEST_NM
-		  FROM test_tb
-		 WHERE TEST_ID = #{testId}
-	</select>
+	
+	<insert id="saveAirPlainInfo" parameterType="HashMap">
+		INSERT INTO rural_experience_resort_village(
+			SLCTN_YEAR,
+			CTRD_NM,
+			CTRD_CODE,
+			SIGNGU_NM,
+			SIGNGU_CODE,
+			VILAGE_NM,
+			VILAGE_DETAIL_ADRES,
+			VILAGE_REG_DT
+		)VALUES(
+			#{SLCTN_YEAR},
+			#{CTRD_NM},
+			#{CTRD_CODE},
+			#{SIGNGU_NM},
+			#{SIGNGU_CODE},
+			#{VILAGE_NM},
+			#{VILAGE_DETAIL_ADRES},
+			NOW()
+		)
+	</insert>
 	
 </mapper>

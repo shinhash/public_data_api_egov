@@ -5,7 +5,12 @@ import java.util.Map;
 
 public interface AirPlainAPIDao {
 
-	public List<Map<String, Object>> getAirPlainList(Map<String, Object> map) throws Exception;
+	public int checkAirPlainInfo(Map<String, Object> map) throws Exception;
+
+	public List<Map<String, Object>> getAirPlainList() throws Exception;
 	
 	public void saveAirPlainList(Map<String, Object> map) throws Exception;
+
+	public String selectSchedulerInfoUseYnCheck(String schdulCd) throws Exception;
+
 }

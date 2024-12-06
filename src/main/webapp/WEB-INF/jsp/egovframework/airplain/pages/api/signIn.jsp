@@ -8,8 +8,5 @@
 </head>
 <body>
 
-hello egov framework !!!
-testIndex.jsp
-
 </body>
 </html>

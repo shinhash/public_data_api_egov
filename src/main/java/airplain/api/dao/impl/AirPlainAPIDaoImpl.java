@@ -15,8 +15,6 @@ import egovframework.rte.psl.dataaccess.EgovAbstractMapper;
 
 @Repository("airPlainAPIDao")
 public class AirPlainAPIDaoImpl extends EgovAbstractMapper implements AirPlainAPIDao {
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(AirPlainAPIDaoImpl.class);
 	/**
 	 * EgovAbstractDAO ibatis version
 	 * ibatis 사용시 xml 파일 형식은  new -> sqlMap
@@ -26,12 +24,22 @@ public class AirPlainAPIDaoImpl extends EgovAbstractMapper implements AirPlainAP
 	 */
 	
 	@Override
-	public List<Map<String, Object>> getAirPlainList(Map<String, Object> map) throws Exception {
-		return selectList("airPlainAPIDao.getAirPlainList", map);
+	public int checkAirPlainInfo(Map<String, Object> map) throws Exception {
+		return selectOne("airPlainAPIDao.checkAirPlainInfo", map);
+	}
+	
+	@Override
+	public List<Map<String, Object>> getAirPlainList() throws Exception {
+		return selectList("airPlainAPIDao.getAirPlainList");
 	}
 
 	@Override
 	public void saveAirPlainList(Map<String, Object> map) throws Exception {
 		insert("airPlainAPIDao.saveAirPlainInfo", map);
+	}
+
+	@Override
+	public String selectSchedulerInfoUseYnCheck(String schdulCd) throws Exception {
+		return selectOne("airPlainAPIDao.selectSchedulerInfoUseYnCheck", schdulCd);
 	}
 }

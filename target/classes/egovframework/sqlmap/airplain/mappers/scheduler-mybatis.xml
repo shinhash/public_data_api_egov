@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminSchedulerDao">
+	
+	<select id="selectSchedulerList" resultType="egovMap">
+		SELECT   SCHDUL_CD
+			   , SCHDUL_NM
+			   , SCHDUL_CN
+			   , REG_DT
+			   , UPD_DT
+			   , USE_YN
+		  FROM schdul_info
+		ORDER BY REG_DT DESC
+	</select>
+	
+	<update id="saveSchedulerInfo" parameterType="HashMap">
+		UPDATE schdul_info
+		   SET   UPD_DT = NOW()
+			   , USE_YN = #{useYn}
+		 WHERE SCHDUL_CD = #{schdulCd}
+	</update>
+	
+	<update id="saveSchedulerAllInfo" parameterType="HashMap">
+		UPDATE schdul_info
+		   SET   UPD_DT = NOW()
+			   , USE_YN = #{useYn}
+	</update>
+	
+</mapper>

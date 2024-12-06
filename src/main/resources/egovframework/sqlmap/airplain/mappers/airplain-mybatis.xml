@@ -3,7 +3,14 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="airPlainAPIDao">
 
-	<select id="getAirPlainList" parameterType="HashMap" resultType="egovMap">
+	<select id="checkAirPlainInfo" parameterType="HashMap" resultType="int">
+		SELECT COUNT(CTRD_CODE) AS CNT
+		  FROM rural_experience_resort_village
+		 WHERE CTRD_CODE = #{CTRD_CODE}
+		   AND VILAGE_NM = #{VILAGE_NM}
+	</select>
+	
+	<select id="getAirPlainList" resultType="egovMap">
 		SELECT   SLCTN_YEAR
 			   , CTRD_NM
 			   , CTRD_CODE
@@ -11,6 +18,7 @@
 			   , SIGNGU_CODE
 			   , VILAGE_NM
 			   , VILAGE_DETAIL_ADRES
+			   , VILAGE_REG_DT
 		  FROM rural_experience_resort_village
 	</select>
 	
@@ -22,7 +30,8 @@
 			SIGNGU_NM,
 			SIGNGU_CODE,
 			VILAGE_NM,
-			VILAGE_DETAIL_ADRES
+			VILAGE_DETAIL_ADRES,
+			VILAGE_REG_DT
 		)VALUES(
 			#{SLCTN_YEAR},
 			#{CTRD_NM},
@@ -30,8 +39,15 @@
 			#{SIGNGU_NM},
 			#{SIGNGU_CODE},
 			#{VILAGE_NM},
-			#{VILAGE_DETAIL_ADRES}
+			#{VILAGE_DETAIL_ADRES},
+			NOW()
 		)
 	</insert>
+	
+	<select id="selectSchedulerInfoUseYnCheck" parameterType="String" resultType="String">
+		SELECT USE_YN
+		  FROM schdul_info
+		 WHERE SCHDUL_CD = #{schdulCd}
+	</select>
 	
 </mapper>
