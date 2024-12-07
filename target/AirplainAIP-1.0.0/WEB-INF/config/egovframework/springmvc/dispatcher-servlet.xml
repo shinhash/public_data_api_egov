@@ -46,7 +46,7 @@
 <!--         <property name="paramName" value="language" /> -->
 <!--     </bean> -->
     
-	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" p:contentType="application/json; charset=UTF-8" />
 	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0" />	
     <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" p:order="2"
 	    p:viewClass="org.springframework.web.servlet.view.JstlView"
@@ -83,4 +83,19 @@
 	<!-- 
     <mvc:view-controller path="/cmmn/validator.do" view-name="cmmn/validator"/>
      -->
+     
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/plain;charset=UTF-8</value>
+						<value>text/html;charset=UTF-8</value>
+						<value>application/json;charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+			<bean class="org.springframework.http.converter.BufferedImageHttpMessageConverter"/>
+		</mvc:message-converters>
+   </mvc:annotation-driven>
 </beans>

@@ -72,7 +72,11 @@
 				        	let saveRstCd = data.saveResultCode;
 				        	let saveRstMg = data.saveResultMessage;
 				        	alert(saveRstMg);
-				        	if(saveRstCd === "SUCCESS") document.location.href = "/scheduleManage.do";
+				        	if(saveRstCd === "SUCCESS"){
+				        		document.getElementById("scheduleManage").action = "/scheduleManage.do";
+								document.getElementById("scheduleManage").method = "POST";
+								document.getElementById("scheduleManage").submit();
+				        	}
 				        },
 				        error       : function (error) {
 				        	console.error(error);
@@ -185,5 +189,6 @@
 			</div>
 		</div>
 		<form id="dataSendForm"></form>
+		<form id="scheduleManage"></form>
 	</body>
 </html>

@@ -10,7 +10,7 @@
 		   AND VILAGE_NM = #{VILAGE_NM}
 	</select>
 	
-	<select id="getAirPlainList" parameterType="HashMap" resultType="egovMap">
+	<select id="getAirPlainList" resultType="egovMap">
 		SELECT   SLCTN_YEAR
 			   , CTRD_NM
 			   , CTRD_CODE
@@ -43,5 +43,11 @@
 			NOW()
 		)
 	</insert>
+	
+	<select id="selectSchedulerInfoUseYnCheck" parameterType="String" resultType="String">
+		SELECT USE_YN
+		  FROM schdul_info
+		 WHERE SCHDUL_CD = #{schdulCd}
+	</select>
 	
 </mapper>

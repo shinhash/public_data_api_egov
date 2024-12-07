@@ -52,7 +52,7 @@
 			
 			function goScheduleManage(){
 				document.getElementById("scheduleManage").action = "/scheduleManage.do";
-				document.getElementById("scheduleManage").method = "GET";
+				document.getElementById("scheduleManage").method = "POST";
 				document.getElementById("scheduleManage").submit();
 			}
 		</script>

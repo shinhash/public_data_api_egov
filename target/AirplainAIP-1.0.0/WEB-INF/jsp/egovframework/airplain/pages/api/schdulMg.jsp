@@ -10,6 +10,7 @@
 		<title>Insert title here</title>
 		<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 		<script>
+			
 			$(function(){
 				$(".schdulInfoChkClass").on("change", function(){
 					let schdulCd = $(this)[0].id;
@@ -28,9 +29,9 @@
 						return;
 					}
 					
-					var ajaxUrl = "/saveScheduleInfo.do";
-					var ajaxData = {
-							"schdulCd": schdulCd,
+					let ajaxUrl = "/saveScheduleInfo.do";
+					let ajaxData = {
+							"schdulCd": schdulCd.slice(0, -4),
 							"useYn": useYn
 					};
 					fnCmmnAjaxRequest(ajaxUrl, ajaxData);
@@ -51,8 +52,8 @@
 						return;
 					};
 					
-					var ajaxUrl = "/saveScheduleInfo.do";
-					var ajaxData = {
+					let ajaxUrl = "/saveScheduleInfo.do";
+					let ajaxData = {
 							"schdulCd": "ALL",
 							"useYn": useYn
 					};
@@ -63,12 +64,15 @@
 					$.ajax({
 						type        : "POST",
 				        url         : ajaxUrl,
-				        data        : ajaxData,
+				        data        : JSON.stringify(ajaxData),
 				        contentType	: "application/json; charset=UTF-8",
 				        dataType	: "json",
 				        beforeSend  : function(){},
 				        success     : function (data) {
-				        	console.log(data.saveResult);
+				        	let saveRstCd = data.saveResultCode;
+				        	let saveRstMg = data.saveResultMessage;
+				        	alert(saveRstMg);
+				        	if(saveRstCd === "SUCCESS") document.location.href = "/scheduleManage.do";
 				        },
 				        error       : function (error) {
 				        	console.error(error);

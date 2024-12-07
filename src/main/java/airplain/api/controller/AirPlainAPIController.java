@@ -45,7 +45,7 @@ public class AirPlainAPIController {
 		Reader reader = new InputStreamReader(is);
 		Properties properties = new Properties();
 		properties.load(reader);
-		String apiUrl = properties.getProperty("api.url");
+		String apiUrl = properties.getProperty("api.airplain.url") + "?" + properties.getProperty("api.airplain.key") + "&" + properties.getProperty("api.airplain.returnType");
 		LOGGER.debug("apiUrl : " + apiUrl);
 		
 		RestTemplate restTemplate = new RestTemplate();
@@ -57,7 +57,7 @@ public class AirPlainAPIController {
 		Map<String, Object> apiResult = objectMapper.readValue(apiResp.getBody().toString(), typeReference);
 		LOGGER.debug("ObjectMapper result : " + (Map<String, Object>) apiResult);
 		
-		Map<String, String> apiDataSaveRst = airPlainAPIService.saveAirPlainList(apiResult);
+		Map<String, String> apiDataSaveRst = airPlainAPIService.saveAirPlainList((Map<String, Object>)apiResult.get("response"));
 		LOGGER.debug("apiDataSaveRst : " + apiDataSaveRst);
 		return apiDataSaveRst;
 	}

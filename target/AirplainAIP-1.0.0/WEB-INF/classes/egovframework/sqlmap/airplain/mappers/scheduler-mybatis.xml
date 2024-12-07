@@ -21,4 +21,10 @@
 		 WHERE SCHDUL_CD = #{schdulCd}
 	</update>
 	
+	<update id="saveSchedulerAllInfo" parameterType="HashMap">
+		UPDATE schdul_info
+		   SET   UPD_DT = NOW()
+			   , USE_YN = #{useYn}
+	</update>
+	
 </mapper>

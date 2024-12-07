@@ -10,19 +10,19 @@
 			   , REG_DT
 			   , UPD_DT
 			   , USE_YN
-		  FROM schdul_info
+		  FROM SCHDUL_INFO
 		ORDER BY REG_DT DESC
 	</select>
 	
 	<update id="saveSchedulerInfo" parameterType="HashMap">
-		UPDATE schdul_info
+		UPDATE SCHDUL_INFO
 		   SET   UPD_DT = NOW()
 			   , USE_YN = #{useYn}
 		 WHERE SCHDUL_CD = #{schdulCd}
 	</update>
 	
 	<update id="saveSchedulerAllInfo" parameterType="HashMap">
-		UPDATE schdul_info
+		UPDATE SCHDUL_INFO
 		   SET   UPD_DT = NOW()
 			   , USE_YN = #{useYn}
 	</update>

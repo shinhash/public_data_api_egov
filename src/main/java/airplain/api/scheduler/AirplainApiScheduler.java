@@ -29,9 +29,9 @@ public class AirplainApiScheduler {
 	@Resource(name="airPlainAPIService")
 	private AirPlainAPIService airPlainAPIService;
 	
-	@Scheduled(cron="0 */1 * * * *")
+	@Scheduled(cron="0 */10 * * * *")
 	public void airPlainScheduler() throws Exception {
-		String schdulCd = "SJ001";
+		String schdulCd = "SJ002";
 		
 		String useYn = airPlainAPIService.selectSchedulerInfoUseYnCheck(schdulCd);
 		LOGGER.debug("useYn : {}", useYn);
@@ -43,7 +43,7 @@ public class AirplainApiScheduler {
 				Reader reader = new InputStreamReader(is);
 				Properties properties = new Properties();
 				properties.load(reader);
-				String apiUrl = properties.getProperty("api.url");
+				String apiUrl = properties.getProperty("api.airplain.url") + "?" + properties.getProperty("api.airplain.key") + "&" + properties.getProperty("api.airplain.returnType");
 				LOGGER.debug("apiUrl : " + apiUrl);
 				
 				RestTemplate restTemplate = new RestTemplate();
@@ -55,7 +55,8 @@ public class AirplainApiScheduler {
 				Map<String, Object> apiResult = objectMapper.readValue(apiResp.getBody().toString(), typeReference);
 				LOGGER.debug("ObjectMapper result : " + (Map<String, Object>) apiResult);
 				
-				apiDataSaveRst = airPlainAPIService.saveAirPlainList(apiResult);
+				apiDataSaveRst = airPlainAPIService.saveAirPlainList((Map<String, Object>)apiResult.get("response"));
+				LOGGER.debug("apiDataSaveRst : " + apiDataSaveRst);
 			}catch(Exception e) {
 				apiDataSaveRst.put("result", e.toString());
 				apiDataSaveRst.put("code", "");

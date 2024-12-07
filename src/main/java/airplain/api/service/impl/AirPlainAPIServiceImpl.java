@@ -28,42 +28,37 @@ public class AirPlainAPIServiceImpl implements AirPlainAPIService {
 
 	@Override
 	public Map<String, String> saveAirPlainList(Map<String, Object> apiResult) throws Exception {
-		InputStream is = getClass().getResourceAsStream("/prop/api/secValues.properties");
-		Reader reader = new InputStreamReader(is);
-		Properties properties = new Properties();
-		properties.load(reader);
-		String apiKey = properties.getProperty("api.key");
-		
 		Map<String, String> apiDataSaveRst = new HashMap<String, String>();
-		Map<String, Object> apiMap = (Map<String, Object>) apiResult.get(apiKey);
-		if(apiMap != null) {
-			String apiResultCode = ((Map<String, Object>)apiMap.get("result")).get("code").toString();
-			String apiResultMessage = ((Map<String, Object>)apiMap.get("result")).get("message").toString();
-			List<Map<String, Object>> apiResultRow = (List<Map<String, Object>>) apiMap.get("row");
-			
-			if(apiResultCode.equals("INFO-000")) {
-				try {
-					for(Map<String, Object> map : apiResultRow) {
-						int airPlainCtn = airPlainAPIDao.checkAirPlainInfo(map);
-						if(airPlainCtn == 0) {
-							airPlainAPIDao.saveAirPlainList(map);
-						}
+		
+		Map<String, Object> headerMap = ((Map<String, Object>) apiResult.get("header"));
+		Map<String, Object> bodyMap = ((Map<String, Object>) apiResult.get("body"));
+		
+		System.out.println("headerMap : " + headerMap);
+		System.out.println("bodyMap : " + bodyMap);
+		
+		String apiResultCode = headerMap.get("resultCode").toString();
+		String apiResultMsg = headerMap.get("resultMsg").toString();
+	
+		List<Map<String, Object>> apiResultItemList = (List<Map<String, Object>>) bodyMap.get("items");
+		
+		if(apiResultCode.equals("00")) {
+			try {
+				for(Map<String, Object> apiResultItemInfo : apiResultItemList) {
+					int airPlainCtn = airPlainAPIDao.checkAirPlainInfo(apiResultItemInfo);
+					if(airPlainCtn == 0) {
+						airPlainAPIDao.saveAirPlainList(apiResultItemInfo);
 					}
-					apiDataSaveRst.put("result", "SUCCESS");
-				}catch(Exception e) {
-					apiDataSaveRst.put("result", "ERROR");
 				}
-				apiDataSaveRst.put("code", apiResultCode);
-				apiDataSaveRst.put("message", apiResultMessage);
-			}else {
-				apiDataSaveRst.put("result", "FAIL");
-				apiDataSaveRst.put("code", apiResultCode);
-				apiDataSaveRst.put("message", apiResultMessage);
+				apiDataSaveRst.put("result", "SUCCESS");
+			}catch(Exception e) {
+				apiDataSaveRst.put("result", "ERROR");
 			}
+			apiDataSaveRst.put("code", apiResultCode);
+			apiDataSaveRst.put("message", apiResultMsg);
 		}else {
 			apiDataSaveRst.put("result", "FAIL");
-			apiDataSaveRst.put("code", ((Map<String, Object>)apiResult.get("result")).get("code").toString());
-			apiDataSaveRst.put("message", ((Map<String, Object>)apiResult.get("result")).get("message").toString());
+			apiDataSaveRst.put("code", apiResultCode);
+			apiDataSaveRst.put("message", apiResultMsg);
 		}
 		return apiDataSaveRst;
 	}

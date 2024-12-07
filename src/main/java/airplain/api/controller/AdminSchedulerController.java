@@ -33,7 +33,7 @@ public class AdminSchedulerController {
 	@Resource(name="adminSchedulerService")
 	private AdminSchedulerService adminSchedulerService;
 	
-	@RequestMapping(value="/scheduleManage.do", method={RequestMethod.GET})
+	@RequestMapping(value="/scheduleManage.do", method={RequestMethod.POST})
 	public ModelAndView scheduleManage(ModelAndView modelAndView) throws Exception {
 		List<Map<String, Object>> schedulerList = adminSchedulerService.selectSchedulerList();
 		LOGGER.debug("schedulerList : {}", schedulerList);
